@@ -1,4 +1,5 @@
 import java.util.*;
+import java.time.LocalDate;
 
 enum Level{
     LOW,
@@ -12,6 +13,8 @@ class List {
 
 
 class Task {
+
+
         String title;
         String description;
         Date deadline;
@@ -25,37 +28,127 @@ class Task {
         //create setTag method that selects tag from list object instance 
 
         public String giveTitle(){ return this.title; }
-        public void showTask(){ System.out.println("Show Task"); } // TODO: create function that shows the task information
-        public void modifyTask(){ System.out.println("Modify Task"); } // TODO: create function that allows user to modify a task
-        
-        public void newTask(String title, String description, Date deadline, Level priority, String tag, boolean isComplete, Date created) {
-        
-            //TODO:Create functions that ask the user for given property
-            //this.title = getTitle();
-            //this.description = getDescription();
-            //this.deadline = getDeadline();
-            //this.priority = getPriority();
-            //this.tag = setTag(); TODO: Build setTag function
-            //this.created = setCurrentTime(); TODO: Set current datetime 
+        public void showTask(){ System.out.println("Show Task"); } // TODO: create function that shows the task information        
+        Task(String title, String description, Date deadline, Level priority, String tag, boolean isComplete, Date created) {
+            
+            
+            
+            this.title = getTitle();
+            this.description = getDescription();
+            //TODO:this.deadline = getDeadline();
+            //TODO:this.priority = getPriority();
+            this.tag = setTag(); 
+            //TODO:this.created = setCurrentTime();
         }
     
-        /*Prototype for setTag function
-        String setTag(){
-            Display the available tags to the user
-            Ask user to select a tag
-            Allow user to create new tag
-            Check if tag already exists
+        String getTitle(){
+            String temp;
+            System.out.println("Enter Task");
+            temp = sc.nextLine(); 
+            return temp;
+        }
+        String getDescription(){
+            String temp;
+            System.out.println("Enter Description of the task");
+            temp = sc.nextLine(); 
+            return temp;
+        }
+        //TODO:getDeadline
+        /*
+        Date getDeadline(){
+            int y;
+            int m;
+            int d;
+            System.out.println("Enter year of the deadline");
+            y = sc.nextInt();
+            System.out.println("Enter month of the deadline");
+            m = sc.nextInt();
+            System.out.println("Enter time of the deadline");
+            d = sc.nextInt();
             
-            Return the selected tag
+            Date deadline = new Date(y, m, d);
+            return deadline;
+
+        }
+        */
+        Level getLevel(){
+            Level temp = LOW;
+            System.out.println("Enter the priority of the task");
+            //temp = 
+            return temp;
+        }
+        String setTag(){
+            String newTag;
+            boolean isPresent;
+            String choice;
+            System.out.println("Please select one tag from the following list of tags");
+            System.out.println(L.tags);
+            newTag = sc.nextLine();
+            
+            isPresent = L.tags.contains(newTag);
+            if (isPresent == true){ 
+                return tag;
+            }
+            else {
+                System.out.println("The entered tag does not exist. New tag created.");
+                choice = sc.nextLine();
+                
+                L.tags.add(newTag);
+                return newTag;
+            }
+        }
+        //TODO:set current time
+        /*Date setCurrenttime{
+
+        }
         */
 
-        //TODO:Create functions to delete individual attributes
+        //TODO:get priority
+        /*Level getPriority{
 
+        }
+        */
+        void modifyTask(){
+
+            String isExit = true;
+            int ch;
+            while(isExit == "Y"){
+
+                System.out.println("What do you want to modify?");
+                System.out.println("1) Task name ");
+                System.out.println("2) Task description ");
+                System.out.println("3) Task deadline ");
+                System.out.println("4) Task priority ");
+                
+                ch = sc.nextInt();
+                switch(ch){
+                    case 1:
+                    getTitle();
+                    break;
+                    case 2:
+                    getDescription();
+                    break;
+                    case 3:
+                    getDeadline();
+                    break;
+                    case 4:
+                    getPriority();
+                    break;
+                    default:
+                    System.out.println("Wrong choice entered");
+
+                }
+
+                System.out.println("Do you want to modify anything else?(Y/N)")
+                isExit = sc.nextLine();
+            }
+        }
 }
 
 
 public class main {
     static ArrayList<Task> taskList;
+    static List L = new List();
     public static void main(String[] args ){
         boolean didExit = false;
 
