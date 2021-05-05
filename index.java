@@ -28,34 +28,80 @@ class Task {
         public String giveTitle(){ return this.title; }
 
         // TODO: create function that shows the task information        
-        public void showTask(){ System.out.println("Show Task"); }
         
-        Task(String title, String description, Date deadline, Level priority, String tag, boolean isComplete, Date created) {
-            this.title = getTitle();
-            this.description = getDescription();
-            //DONE:this.deadline = getDeadline();
-            //DONE:this.priority = getPriority();
-            this.tag = setTag(); 
-            //DONE:this.created = getCurrentTime();
+        public void openTask(){
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Task:           " + title);
+            System.out.println("Description:    " + description);
+            System.out.println("Deadline:       " + deadline);
+            System.out.println("Priority level: " + priority);
+            System.out.println("Tag:            " + tag);
+            System.out.println("Date created:   " + created);
+            if(isComplete == true){
+                System.out.println("Status: Not Done");
+            }
+            else{
+                System.out.println("Status: Completed");
+            }
+            String input = "";
+            System.out.println("Mark task as completed?(Y/N): ");
+            
+            
+            input = sc.nextLine();
+            sc.close();
+            if(input.equals("Y")){
+                isComplete = true;
+                System.out.println("Task marked as completed");
+            } 
+            else if (input.equals("N")){
+                System.out.println("Returning");
+                return;
+            }
+            else{
+                System.out.println("Invalid Input returning");
+            }
+        }
+        Task(){};
+
+        Task(String inTitle, String inDescription, LocalDate inDeadline, Level inPriority, String inTag) {
+            title = inTitle;
+            description = inDescription;
+            deadline = inDeadline;
+            priority = inPriority;
+            tag = inTag;
+            isComplete = false;
+            created = LocalDate.now();
+        }
+
+        public Task createTask(){
+            title = getTitle();
+            description = getDescription();
+            deadline = getDeadline();
+            priority = getPriority();
+            tag = getTag();
+
+            return new Task(title, description, deadline, priority, tag);
         }
     
         String getTitle(){
-            Scanner sc = new Scanner(System.in);
+           // Scanner sc = new Scanner(System.in);
             String temp;
 
-            System.out.println("Enter Task");
-            temp = sc.nextLine(); 
-            sc.close();
+            System.out.println("Enter Task name");
+            temp = System.console().readLine();
+            //sc.close();
             return temp;
         }
 
         String getDescription(){
-            String temp;
-            Scanner sc = new Scanner(System.in);
+            String temp="";
+            //Scanner sc = new Scanner(System.in);
 
             System.out.println("Enter Description of the task");
-            temp = sc.nextLine(); 
-            sc.close();
+            temp = System.console().readLine();
+            
+            //sc.close();
             return temp;
         }
         
@@ -79,12 +125,12 @@ class Task {
         
         Level getPriority(){
             String userInput;
-            Scanner sc = new Scanner(System.in);
+            //Scanner sc = new Scanner(System.in);
 
             System.out.println("l= low, m=medium, h=high\n"
                 +"Enter the priority of the task:");
-            userInput = sc.nextLine();
-            sc.close();
+            userInput = System.console().readLine();
+            //sc.close();
 
             switch(userInput){
                 case "l":
@@ -98,14 +144,14 @@ class Task {
             return Level.NONE;
         }
 
-        String setTag(){
+        String getTag(){
             String newTag;
-            Scanner sc = new Scanner(System.in);
+            //Scanner sc = new Scanner(System.in);
 
             System.out.println("Please select one tag from the following list of tags");
             System.out.println(List.tags);
-            newTag = sc.nextLine();
-            sc.close();
+            newTag = System.console().readLine();
+            //sc.close();
 
             if (List.tags.contains(newTag)){ 
                 return tag;
@@ -117,10 +163,6 @@ class Task {
             }
         }
 
-        LocalDate getCurrentTime(){
-            return LocalDate.now();
-        }
-        
         void modifyTask(){
 
             String isExit = "Y";
@@ -211,8 +253,9 @@ public class index {
             if(input.equals("EXIT")){didExit = true;}
 
             //check if user wants to add a task
-            else if(input.equals("ADDTASK")){ //TODO: run task constructor and save task to tasklist
-            System.out.println("Task created ran");
+            else if(input.equals("ADDTASK")){ //TODO: run task constructor and save task to tasklistJ
+            Task temp =  new Task().createTask();
+            taskList.add(temp);
             }
 
             else{
@@ -226,7 +269,7 @@ public class index {
             //perform operation
             switch (operation){
                 case "o":
-                tempTask.showTask();
+                tempTask.openTask();
                 break;
                 case "m":
                 tempTask.modifyTask();
@@ -245,7 +288,7 @@ public class index {
         // 
         // 
         System.out.println("Hello ppl");
-        sc.close();
+     
     }
 
 }
