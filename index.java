@@ -4,7 +4,8 @@ import java.time.LocalDate;
 enum Level{
     LOW,
     MEDIUM,
-    HIGH
+    HIGH,
+    NONE
 }
 
 class List {
@@ -17,101 +18,115 @@ class Task {
 
         String title;
         String description;
-        Date deadline;
+        LocalDate deadline;
         Level priority;
         String tag;
 
         private Boolean isComplete;
-        private Date created;
-
-
-        //create setTag method that selects tag from list object instance 
+        private LocalDate created;
 
         public String giveTitle(){ return this.title; }
-        public void showTask(){ System.out.println("Show Task"); } // TODO: create function that shows the task information        
+
+        // TODO: create function that shows the task information        
+        public void showTask(){ System.out.println("Show Task"); }
+        
         Task(String title, String description, Date deadline, Level priority, String tag, boolean isComplete, Date created) {
-            
-            
-            
             this.title = getTitle();
             this.description = getDescription();
-            //TODO:this.deadline = getDeadline();
-            //TODO:this.priority = getPriority();
+            //DONE:this.deadline = getDeadline();
+            //DONE:this.priority = getPriority();
             this.tag = setTag(); 
-            //TODO:this.created = setCurrentTime();
+            //DONE:this.created = getCurrentTime();
         }
     
         String getTitle(){
+            Scanner sc = new Scanner(System.in);
             String temp;
+
             System.out.println("Enter Task");
             temp = sc.nextLine(); 
+            sc.close();
             return temp;
         }
+
         String getDescription(){
             String temp;
+            Scanner sc = new Scanner(System.in);
+
             System.out.println("Enter Description of the task");
             temp = sc.nextLine(); 
+            sc.close();
             return temp;
         }
-        //TODO:getDeadline
-        /*
-        Date getDeadline(){
-            int y;
-            int m;
-            int d;
-            System.out.println("Enter year of the deadline");
-            y = sc.nextInt();
-            System.out.println("Enter month of the deadline");
-            m = sc.nextInt();
-            System.out.println("Enter time of the deadline");
-            d = sc.nextInt();
-            
-            Date deadline = new Date(y, m, d);
-            return deadline;
+        
+        LocalDate getDeadline(){
 
+            Scanner sc = new Scanner(System.in);
+            int year;
+            int month;
+            int day;
+            System.out.println("Enter year of the deadline");
+            year = sc.nextInt();
+            System.out.println("Enter month of the deadline");
+            month = sc.nextInt();
+            System.out.println("Enter time of the deadline");
+            day = sc.nextInt();
+            sc.close();
+            LocalDate deadline = LocalDate.of(year, month, day);
+            return deadline;
         }
-        */
-        Level getLevel(){
-            Level temp = LOW;
-            System.out.println("Enter the priority of the task");
-            //temp = 
-            return temp;
+        
+        
+        Level getPriority(){
+            String userInput;
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("l= low, m=medium, h=high\n"
+                +"Enter the priority of the task:");
+            userInput = sc.nextLine();
+            sc.close();
+
+            switch(userInput){
+                case "l":
+                return Level.LOW;
+                case "m":
+                return Level.MEDIUM;
+                case "h":
+                return Level.HIGH;
+            }
+
+            return Level.NONE;
         }
+
         String setTag(){
             String newTag;
-            boolean isPresent;
-            String choice;
+            Scanner sc = new Scanner(System.in);
+
             System.out.println("Please select one tag from the following list of tags");
-            System.out.println(L.tags);
+            System.out.println(List.tags);
             newTag = sc.nextLine();
-            
-            isPresent = L.tags.contains(newTag);
-            if (isPresent == true){ 
+            sc.close();
+
+            if (List.tags.contains(newTag)){ 
                 return tag;
             }
             else {
+                List.tags.add(newTag);
                 System.out.println("The entered tag does not exist. New tag created.");
-                choice = sc.nextLine();
-                
-                L.tags.add(newTag);
                 return newTag;
             }
         }
-        //TODO:set current time
-        /*Date setCurrenttime{
 
+        LocalDate getCurrentTime(){
+            return LocalDate.now();
         }
-        */
-
-        //TODO:get priority
-        /*Level getPriority{
-
-        }
-        */
+        
         void modifyTask(){
 
-            String isExit = true;
+            String isExit = "Y";
             int ch;
+            Scanner sc = new Scanner(System.in);
+
             while(isExit == "Y"){
 
                 System.out.println("What do you want to modify?");
@@ -139,20 +154,20 @@ class Task {
 
                 }
 
-                System.out.println("Do you want to modify anything else?(Y/N)")
+                System.out.println("Do you want to modify anything else?(Y/N)");
                 isExit = sc.nextLine();
             }
+            sc.close();
         }
-}
+};
 
-
-public class main {
+public class index {
     static ArrayList<Task> taskList;
-    static List L = new List();
+
     public static void main(String[] args ){
         boolean didExit = false;
-
         Scanner sc = new Scanner(System.in);
+
         
         while(!didExit)
         {   
