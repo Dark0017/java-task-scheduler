@@ -25,10 +25,10 @@ class Task {
         private Boolean isComplete;
         private LocalDate created;
 
-        public String giveTitle(){ return this.title; }
-
-        // TODO: create function that shows the task information        
+        Task(){};
         
+        public String giveTitle(){ return this.title; }      
+
         public void openTask(){
             Scanner sc = new Scanner(System.in);
 
@@ -61,7 +61,7 @@ class Task {
                 System.out.println("Invalid Input returning");
             }
         }
-        Task(){};
+        
 
         Task(String inTitle, String inDescription, LocalDate inDeadline, Level inPriority, String inTag) {
             title = inTitle;
