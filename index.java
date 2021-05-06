@@ -38,11 +38,11 @@ class Task {
             System.out.println("\nPriority level: " + priority);
             System.out.println("\nTag:            " + tag);
             System.out.println("\nDate created:   " + created);
-            if(isComplete == true){
-                System.out.println("Status: Not Done");
+            if(isComplete){
+                System.out.println("Status: Completed\n");
             }
             else{
-                System.out.println("Status: Completed");
+                System.out.println("Status: Not Done\n");
             }
             String input = "";
             System.out.println("Mark task as completed?(Y/N): ");
