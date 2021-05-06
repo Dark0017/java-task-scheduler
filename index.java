@@ -9,7 +9,7 @@ enum Level{
 }
 
 class List {
-    public static Set<String> tags;
+    public static Set<String> tags = new HashSet<String>();
 }
 
 
@@ -49,7 +49,6 @@ class Task {
             
             
             input = sc.nextLine();
-            sc.close();
             if(input.equals("Y")){
                 isComplete = true;
                 System.out.println("Task marked as completed");
@@ -75,11 +74,16 @@ class Task {
         }
 
         public Task createTask(){
-            title = getTitle();
-            description = getDescription();
-            deadline = getDeadline();
-            priority = getPriority();
-            tag = getTag();
+            try{
+                title = getTitle();
+                description = getDescription();
+                deadline = getDeadline();
+                priority = getPriority();
+                tag = getTag();
+            } catch(Exception e){
+                System.out.println("Invalid input");
+                System.out.println(e);
+            }
 
             return new Task(title, description, deadline, priority, tag);
         }
@@ -117,7 +121,6 @@ class Task {
             month = sc.nextInt();
             System.out.println("Enter time of the deadline");
             day = sc.nextInt();
-            sc.close();
             LocalDate deadline = LocalDate.of(year, month, day);
             return deadline;
         }
@@ -152,24 +155,33 @@ class Task {
             System.out.println(List.tags);
             newTag = System.console().readLine();
             //sc.close();
-
-            if (List.tags.contains(newTag)){ 
-                return tag;
-            }
-            else {
+            System.out.println("inside getTag before comparing input");
+            
+            if (List.tags == null){
+                List.tags.add(newTag);
+                System.out.println("The entered tag does not exist. New tag created.");
+                return newTag;
+            }else if (!List.tags.contains(newTag))
+            {
                 List.tags.add(newTag);
                 System.out.println("The entered tag does not exist. New tag created.");
                 return newTag;
             }
+            else{ 
+                System.out.println("inside if statemnet ");
+                return tag;
+            }
         }
+
 
         void modifyTask(){
 
-            String isExit = "Y";
-            int ch;
+            Boolean didExit = false;
+            int choice;
+            String tempInput;
             Scanner sc = new Scanner(System.in);
 
-            while(isExit == "Y"){
+            while(!didExit){
 
                 System.out.println("What do you want to modify?");
                 System.out.println("1) Task name ");
@@ -177,40 +189,45 @@ class Task {
                 System.out.println("3) Task deadline ");
                 System.out.println("4) Task priority ");
                 
-                ch = sc.nextInt();
-                switch(ch){
+                choice = sc.nextInt();
+
+                switch(choice){
                     case 1:
-                    getTitle();
+                    title = getTitle();
                     break;
                     case 2:
-                    getDescription();
+                    description = getDescription();
                     break;
                     case 3:
-                    getDeadline();
+                    deadline =  getDeadline();
                     break;
                     case 4:
-                    getPriority();
+                    priority =  getPriority();
                     break;
                     default:
                     System.out.println("Wrong choice entered");
 
                 }
-
-                System.out.println("Do you want to modify anything else?(Y/N)");
-                isExit = sc.nextLine();
+                
+                System.out.println("Do you want to modify anything else?(y/n)");
+                tempInput = System.console().readLine();
+                
+                if(tempInput.equals("n")){
+                    didExit = true;
+                }
             }
-            sc.close();
-        }
+        };
+
 };
 
 public class index {
-    static ArrayList<Task> taskList;
+    static ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args ){
         boolean didExit = false;
         Scanner sc = new Scanner(System.in);
 
-        
+
         while(!didExit)
         {   
             String input = "";
@@ -238,12 +255,13 @@ public class index {
 
             // display format to enter task number and option
             // #d - delete #th task, #m - modify #th task, exit
-            System.out.println("Enter the operation you want to perform in '#x' format, where\n"
-            +"# = so. no. of the task displayed\n"
-            +"x = operation you wish to perform on the task\n"
-            +"Operations: o: open, m: modify, d: delete"
-            +"Enter EXIT to exit the program"
-            +"Enter ADDTASK to add a task");
+            System.out.println("\n\n________________________________________________________\n"
+            +"Enter the operation you want to perform in '#x' format, where\n\n"
+            +"# = so. no. of the task displayed\n\n"
+            +"x = operation you wish to perform on the task\n\n"
+            +"Operations: o: open, m: modify, d: delete\n\n"
+            +"Enter EXIT to exit the program\n\n"
+            +"Enter ADDTASK to add a task\n");
 
             // take input from user
             input = sc.nextLine();
@@ -259,35 +277,40 @@ public class index {
             }
 
             else{
-            //parse
-            taskIndex = Integer.parseInt(input.substring(0,1));
-            operation = input.substring(1);
-            
-            //get task object at index
-            Task tempTask = taskList.get(taskIndex);
+                try{
 
-            //perform operation
-            switch (operation){
-                case "o":
-                tempTask.openTask();
-                break;
-                case "m":
-                tempTask.modifyTask();
-                break;
-                case "d":
-                taskList.remove(taskIndex);
-                break;
+                    //parse
+                    taskIndex = Integer.parseInt(input.substring(0,1));
+                    operation = input.substring(1);
+                    
+                    //get task object at index
+                    Task tempTask = taskList.get(taskIndex);
+
+                    //perform operation
+                    switch (operation){
+                        case "o":
+                        tempTask.openTask();
+                        break;
+                        case "m":
+                        tempTask.modifyTask();
+                        taskList.set(taskIndex, tempTask);
+                        break;
+                        case "d":
+                        taskList.remove(taskIndex);
+                        break;
+                        }
+
+                } catch(Exception e){
+                    System.out.println("\n\nInvalid input !");
+                    System.out.println(e);
+                }
             }
-
-            //save it back to the list
-            taskList.set(taskIndex, tempTask);
         }
-
-        }
-        
         // 
         // 
-        System.out.println("Hello ppl");
+        System.out.println("________________________________________________________\n"
+                            +"\nThank you for using our task manager\n"
+                            +"We'll add file storage soon");
      
     }
 
