@@ -32,12 +32,12 @@ class Task {
         public void openTask(){
             Scanner sc = new Scanner(System.in);
 
-            System.out.println("Task:           " + title);
-            System.out.println("Description:    " + description);
-            System.out.println("Deadline:       " + deadline);
-            System.out.println("Priority level: " + priority);
-            System.out.println("Tag:            " + tag);
-            System.out.println("Date created:   " + created);
+            System.out.println("\nTask:           " + title);
+            System.out.println("\nDescription:    " + description);
+            System.out.println("\nDeadline:       " + deadline);
+            System.out.println("\nPriority level: " + priority);
+            System.out.println("\nTag:            " + tag);
+            System.out.println("\nDate created:   " + created);
             if(isComplete == true){
                 System.out.println("Status: Not Done");
             }
@@ -92,7 +92,7 @@ class Task {
            // Scanner sc = new Scanner(System.in);
             String temp;
 
-            System.out.println("Enter Task name");
+            System.out.println("\nEnter Task name:");
             temp = System.console().readLine();
             //sc.close();
             return temp;
@@ -102,7 +102,7 @@ class Task {
             String temp="";
             //Scanner sc = new Scanner(System.in);
 
-            System.out.println("Enter Description of the task");
+            System.out.println("\nEnter Description of the task:");
             temp = System.console().readLine();
             
             //sc.close();
@@ -115,11 +115,11 @@ class Task {
             int year;
             int month;
             int day;
-            System.out.println("Enter year of the deadline");
+            System.out.println("\nEnter year of the deadline:");
             year = sc.nextInt();
-            System.out.println("Enter month of the deadline");
+            System.out.println("\nEnter month of the deadline:");
             month = sc.nextInt();
-            System.out.println("Enter time of the deadline");
+            System.out.println("\nEnter time of the deadline:");
             day = sc.nextInt();
             LocalDate deadline = LocalDate.of(year, month, day);
             return deadline;
@@ -130,7 +130,7 @@ class Task {
             String userInput;
             //Scanner sc = new Scanner(System.in);
 
-            System.out.println("l= low, m=medium, h=high\n"
+            System.out.println("\nl= low, m=medium, h=high\n"
                 +"Enter the priority of the task:");
             userInput = System.console().readLine();
             //sc.close();
@@ -151,7 +151,7 @@ class Task {
             String newTag;
             //Scanner sc = new Scanner(System.in);
 
-            System.out.println("Please select one tag from the following list of tags");
+            System.out.println("\nPlease select one tag from the following list of tags");
             System.out.println(List.tags);
             newTag = System.console().readLine();
             //sc.close();
@@ -235,6 +235,8 @@ public class index {
             String operation = "";
 
             // display list of tasks for today
+            
+            System.out.println("\n\n____________________________________________________________________\n\n");
             try{
             if(taskList != null) {
                 for(int i =0; i < taskList.size(); i ++)
@@ -255,7 +257,7 @@ public class index {
 
             // display format to enter task number and option
             // #d - delete #th task, #m - modify #th task, exit
-            System.out.println("\n\n________________________________________________________\n"
+            System.out.println("\n"
             +"Enter the operation you want to perform in '#x' format, where\n\n"
             +"# = so. no. of the task displayed\n\n"
             +"x = operation you wish to perform on the task\n\n"
@@ -265,7 +267,7 @@ public class index {
 
             // take input from user
             input = sc.nextLine();
-            System.out.println("Input: " + input);
+            System.out.println("\nInput: " + input);
 
             // check if user wants to exit
             if(input.equals("EXIT")){didExit = true;}
